@@ -38,8 +38,11 @@ public class QuizActivity extends AppCompatActivity {
 
     private Question[] mQuestions = new Question[] {
             new Question_TF(R.string.question_1, true),
-            new Question_MC(R.string.question_2, 4),
-            new Question_FIB(R.string.question_3, "Europe")
+            new Question_MC(R.string.question_2, 4, new int[]{R.string.question_2_o1, R.string.question_2_o2, R.string.question_2_o3, R.string.question_2_o4}),
+            new Question_FIB(R.string.question_3, "Europe"),
+            new Question_MC(R.string.question_4, 2, new int[]{R.string.question_4_o1, R.string.question_4_o2, R.string.question_4_o3, R.string.question_4_o4}),
+            new Question_TF(R.string.question_5, false),
+            new Question_FIB(R.string.question_6, "Ceylon")
     };
 
     private int mCurrentIndex = 0;
@@ -209,17 +212,6 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
-        mCheatButton = findViewById(R.id.cheat_button);
-        mCheatButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Question_TF question = (Question_TF)mQuestions[mCurrentIndex];
-                boolean answerIsTrue = question.getAnswerTrue();
-                Intent intent = CheatActivity.newIntent(QuizActivity.this, answerIsTrue);
-                startActivityForResult(intent, REQUEST_CODE_CHEAT);
-            }
-        });
-
         // Set up parts of the view specific to different layouts
 
         // Code specific to true/false questions
@@ -244,8 +236,11 @@ public class QuizActivity extends AppCompatActivity {
 
         // Code specific to multiple choice questions
         if (mQuestions[mCurrentIndex].getClass() == Question_MC.class) {
+            // Retrieve the current question so we can access the choices
+            Question_MC question = (Question_MC) mQuestions[mCurrentIndex];
+
             mOption1Button = findViewById(R.id.option_1_button);
-            mOption1Button.setText(R.string.question_2_o1);
+            mOption1Button.setText(question.getAllAnswerIds()[0]);
             mOption1Button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -254,7 +249,7 @@ public class QuizActivity extends AppCompatActivity {
             });
 
             mOption2Button = findViewById(R.id.option_2_button);
-            mOption2Button.setText(R.string.question_2_o2);
+            mOption2Button.setText(question.getAllAnswerIds()[1]);
             mOption2Button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -263,7 +258,7 @@ public class QuizActivity extends AppCompatActivity {
             });
 
             mOption3Button = findViewById(R.id.option_3_button);
-            mOption3Button.setText(R.string.question_2_o3);
+            mOption3Button.setText(question.getAllAnswerIds()[2]);
             mOption3Button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -272,7 +267,7 @@ public class QuizActivity extends AppCompatActivity {
             });
 
             mOption4Button = findViewById(R.id.option_4_button);
-            mOption4Button.setText(R.string.question_2_o4);
+            mOption4Button.setText(question.getAllAnswerIds()[3]);
             mOption4Button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

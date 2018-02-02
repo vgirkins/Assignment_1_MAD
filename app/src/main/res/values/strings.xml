@@ -14,9 +14,16 @@
     <string name="question_1">Caledonia is the old name for Scotland.</string>
     <string name="question_2">What percent of the world\'s population lives in the Southern hemisphere?</string>
     <string name="question_3">What is the only continent whose name does not include the letter \'a\'?</string>
+    <string name="question_4">Which of the following islands is not in the Mediterranean Sea?</string>
+    <string name="question_5">Deserts are defined by average temperature.</string>
+    <string name="question_6">What is the old name for Sri Lanka?</string>
     <string name="question_2_o1">Sixty</string>
     <string name="question_2_o2">Seventy</string>
     <string name="question_2_o3">Eighty</string>
     <string name="question_2_o4">Ninety</string>
+    <string name="question_4_o1">Cyprus</string>
+    <string name="question_4_o2">Ogami</string>
+    <string name="question_4_o3">Hvar</string>
+    <string name="question_4_o4">Aegina</string>
     <string name="hint">Answer</string>
 </resources>
