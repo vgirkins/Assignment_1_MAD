@@ -47,50 +47,16 @@ public class QuizActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate(Bundle) called");
-
+        super.onCreate(savedInstanceState);
+        // Set the correct content view specific to this question
+        setLayout();
         // Restore the index of the current question if it exists
         if (savedInstanceState != null) {
             mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
         }
 
-        // Set the correct layout specific to this question
-        setLayout();
-
-        // Set up parts of the view that are consistent across layouts.
-        mQuestionTextView = findViewById(R.id.question_text_view);
-        mQuestionTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mCurrentIndex = (mCurrentIndex + 1) % mQuestions.length;
-                updateQuestion();
-            }
-        });
-
-        mNextButton = findViewById(R.id.next_button);
-        mNextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mCurrentIndex = (mCurrentIndex + 1) % mQuestions.length;
-                mIsCheater = false;
-                updateQuestion();
-            }
-        });
-
-        // Code for cheat button; separated for clarity while I code
-        mCheatButton = findViewById(R.id.cheat_button);
-        mCheatButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Question_TF question = (Question_TF)mQuestions[mCurrentIndex];
-                boolean answerIsTrue = question.getAnswerTrue();
-                Intent intent = CheatActivity.newIntent(QuizActivity.this, answerIsTrue);
-                startActivityForResult(intent, REQUEST_CODE_CHEAT);
-            }
-        });
-
-        // Initialize components of the view specific to question type
+        // Initialize components of the view
         initializeView();
 
         updateQuestion();
@@ -111,36 +77,6 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart() called");
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume() called");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause() called");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop() called");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy() called");
-    }
-
-    @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         Log.i(TAG, "onSaveInstanceState");
@@ -148,13 +84,12 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void updateQuestion() {
-        // Set the correct layout specific to this question
         setLayout();
+        initializeView();
         int question = mQuestions[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(question);
 
         // Initialize components of the view specific to question type
-        initializeView();
     }
 
     private void checkTFAnswer(boolean userPressedTrue) {
@@ -192,7 +127,7 @@ public class QuizActivity extends AppCompatActivity {
         Question_FIB question = (Question_FIB)mQuestions[mCurrentIndex];
         String correctAnswer = question.getAnswer().toLowerCase();
         userSubmitted = userSubmitted.toLowerCase();
-        int messageResId = (userSubmitted == correctAnswer ? R.string.right_answer_toast : R.string.wrong_answer_toast);
+        int messageResId = (userSubmitted.equals(correctAnswer) ? R.string.right_answer_toast : R.string.wrong_answer_toast);
 
         Toast toast = Toast.makeText(QuizActivity.this, messageResId, Toast.LENGTH_SHORT );
         toast.setGravity(Gravity.TOP, 0, 0);
@@ -202,7 +137,6 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void setLayout() {
-        Log.d(TAG, "setLayout() called");
         // A method to decide based on the current question which view to use.
         // Called in onCreate() and updateQuestion().
 
@@ -224,6 +158,40 @@ public class QuizActivity extends AppCompatActivity {
     private void initializeView() {
         // A method to initialize components specific to each view.
         // Called in onCreate() and updateQuestion().
+
+        // Set up parts of the view that are consistent across layouts.
+
+        mQuestionTextView = findViewById(R.id.question_text_view);
+        mQuestionTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCurrentIndex = (mCurrentIndex + 1) % mQuestions.length;
+                updateQuestion();
+            }
+        });
+
+        mNextButton = findViewById(R.id.next_button);
+        mNextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCurrentIndex = (mCurrentIndex + 1) % mQuestions.length;
+                mIsCheater = false;
+                updateQuestion();
+            }
+        });
+
+        mCheatButton = findViewById(R.id.cheat_button);
+        mCheatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Question_TF question = (Question_TF)mQuestions[mCurrentIndex];
+                boolean answerIsTrue = question.getAnswerTrue();
+                Intent intent = CheatActivity.newIntent(QuizActivity.this, answerIsTrue);
+                startActivityForResult(intent, REQUEST_CODE_CHEAT);
+            }
+        });
+
+        // Set up parts of the view specific to different layouts
 
         // Code specific to true/false questions
         if (mQuestions[mCurrentIndex].getClass() == Question_TF.class) {
@@ -248,6 +216,7 @@ public class QuizActivity extends AppCompatActivity {
         // Code specific to multiple choice questions
         if (mQuestions[mCurrentIndex].getClass() == Question_MC.class) {
             mOption1Button = findViewById(R.id.option_1_button);
+            mOption1Button.setText(R.string.question_2_o1);
             mOption1Button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -256,6 +225,7 @@ public class QuizActivity extends AppCompatActivity {
             });
 
             mOption2Button = findViewById(R.id.option_2_button);
+            mOption2Button.setText(R.string.question_2_o2);
             mOption2Button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -264,6 +234,7 @@ public class QuizActivity extends AppCompatActivity {
             });
 
             mOption3Button = findViewById(R.id.option_3_button);
+            mOption3Button.setText(R.string.question_2_o3);
             mOption3Button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -272,6 +243,7 @@ public class QuizActivity extends AppCompatActivity {
             });
 
             mOption4Button = findViewById(R.id.option_4_button);
+            mOption4Button.setText(R.string.question_2_o4);
             mOption4Button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
