@@ -46,6 +46,8 @@ public class QuizActivity extends AppCompatActivity {
     };
 
     private int mCurrentIndex = 0;
+    private int userScore = 0;
+    private boolean justAnsweredQuestion = false;   // To keep the user from racking up points just by hitting the correct answer over and over
     private boolean mIsCheater;
 
     @Override
@@ -116,12 +118,11 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void updateQuestion() {
+        justAnsweredQuestion = false;
         setLayout();
         initializeView();
         int question = mQuestions[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(question);
-
-        // Initialize components of the view specific to question type
     }
 
     private void checkTFAnswer(boolean userPressedTrue) {
@@ -135,6 +136,11 @@ public class QuizActivity extends AppCompatActivity {
         else {
             messageResId = (userPressedTrue == isAnswerTrue ? R.string.right_answer_toast : R.string.wrong_answer_toast);
         }
+        // Increment score if appropriate
+        if (userPressedTrue == isAnswerTrue && !justAnsweredQuestion) {
+            userScore++;
+            justAnsweredQuestion = true;
+        }
 
         Toast toast = Toast.makeText(QuizActivity.this, messageResId, Toast.LENGTH_SHORT );
         toast.setGravity(Gravity.TOP, 0, 0);
@@ -146,7 +152,12 @@ public class QuizActivity extends AppCompatActivity {
     private void checkMCAnswer(int userPressedButton) {
         Question_MC question = (Question_MC)mQuestions[mCurrentIndex];
         int correctIndex = question.getCorrectAnswerIndex();
-        int messageResId = (userPressedButton == correctIndex? R.string.right_answer_toast : R.string.wrong_answer_toast);
+        int messageResId = (userPressedButton == correctIndex ? R.string.right_answer_toast : R.string.wrong_answer_toast);
+        // Increment score if appropriate
+        if (userPressedButton == correctIndex && !justAnsweredQuestion) {
+            userScore++;
+            justAnsweredQuestion = true;
+        }
 
         Toast toast = Toast.makeText(QuizActivity.this, messageResId, Toast.LENGTH_SHORT );
         toast.setGravity(Gravity.TOP, 0, 0);
@@ -160,6 +171,11 @@ public class QuizActivity extends AppCompatActivity {
         String correctAnswer = question.getAnswer().toLowerCase();
         userSubmitted = userSubmitted.toLowerCase();
         int messageResId = (userSubmitted.equals(correctAnswer) ? R.string.right_answer_toast : R.string.wrong_answer_toast);
+        // Increment score if appropriate
+        if (userSubmitted.equals(correctAnswer) && !justAnsweredQuestion) {
+            userScore++;
+            justAnsweredQuestion = true;
+        }
 
         Toast toast = Toast.makeText(QuizActivity.this, messageResId, Toast.LENGTH_SHORT );
         toast.setGravity(Gravity.TOP, 0, 0);
