@@ -1,0 +1,22 @@
+<resources>
+
+    <string name="app_name">GeoQuizV2</string>
+    <string name="true_button">Yep</string>
+    <string name="false_button">Nope</string>
+    <string name="next_button">Next</string>
+    <string name="right_answer_toast">Correct!</string>
+    <string name="wrong_answer_toast">Sorry, no.</string>
+    <string name="warning_text">Are you sure you want to do this?</string>
+    <string name="show_answer_button">Show Answer</string>
+    <string name="cheat_button">Cheat!</string>
+    <string name="submit_button">Submit</string>
+    <string name="judgment_toast">Cheating is wrong.</string>
+    <string name="question_1">Caledonia is the old name for Scotland.</string>
+    <string name="question_2">What percent of the world\'s population lives in the Southern hemisphere?</string>
+    <string name="question_3">What is the only continent whose name does not include the letter \'a\'?</string>
+    <string name="question_2_o1">Sixty</string>
+    <string name="question_2_o2">Seventy</string>
+    <string name="question_2_o3">Eighty</string>
+    <string name="question_2_o4">Ninety</string>
+    <string name="hint">Answer</string>
+</resources>
