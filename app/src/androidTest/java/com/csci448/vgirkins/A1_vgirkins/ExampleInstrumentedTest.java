@@ -1,4 +1,4 @@
-package com.csci448.vgirkins.geoquizv2;
+package com.csci448.vgirkins.A1_vgirkins;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.csci448.vgirkins.geoquizv2", appContext.getPackageName());
+        assertEquals("com.csci448.vgirkins.A1_vgirkins", appContext.getPackageName());
     }
 }

@@ -1,4 +1,4 @@
-package com.csci448.vgirkins.geoquizv2;
+package com.csci448.vgirkins.A1_vgirkins;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,9 +11,9 @@ import android.widget.TextView;
 public class CheatActivity extends AppCompatActivity {
 
     private static final String EXTRA_ANSWER_IS_TRUE =
-            "com.csci448.vgirkins.geoquizv2.answer_is_true";
+            "com.csci448.vgirkins.A1_vgirkins.answer_is_true";
     private static final String EXTRA_ANSWER_SHOWN =
-            "com.csci448.vgirkins.geoquizv2.answer_shown";
+            "com.csci448.vgirkins.A1_vgirkins.answer_shown";
 
     private boolean mAnswerIsTrue;
     private TextView mAnswerTextView;

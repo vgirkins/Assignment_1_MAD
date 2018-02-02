@@ -1,4 +1,4 @@
-package com.csci448.vgirkins.geoquizv2;
+package com.csci448.vgirkins.A1_vgirkins;
 
 /**
  * Created by Tori on 2/2/2018.

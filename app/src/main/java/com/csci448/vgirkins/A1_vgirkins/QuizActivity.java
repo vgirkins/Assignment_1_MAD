@@ -4,7 +4,7 @@ https://www.android-examples.com/change-toast-message-background-color-in-androi
 https://stackoverflow.com/questions/31162236/setbackgroundresource-in-android-studio-expects-drawable-not-int#31162324
 https://stackoverflow.com/questions/3275333/how-to-use-a-xml-shape-drawable#4437303
  */
-package com.csci448.vgirkins.geoquizv2;
+package com.csci448.vgirkins.A1_vgirkins;
 
 import android.app.Activity;
 import android.content.Intent;
