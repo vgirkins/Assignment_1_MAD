@@ -32,8 +32,8 @@ public class QuizActivity extends AppCompatActivity {
     private Button mOption4Button;
     private Button mSubmitButton;
     private Button mNextButton;
-    private Button mCheatButton;
     private TextView mQuestionTextView;
+    private TextView mUserScoreView;
     private EditText mEditText;
 
     private Question[] mQuestions = new Question[] {
@@ -139,8 +139,9 @@ public class QuizActivity extends AppCompatActivity {
         // Increment score if appropriate
         if (userPressedTrue == isAnswerTrue && !justAnsweredQuestion) {
             userScore++;
-            justAnsweredQuestion = true;
+            mUserScoreView.setText(Integer.toString(userScore));
         }
+        justAnsweredQuestion = true;
 
         Toast toast = Toast.makeText(QuizActivity.this, messageResId, Toast.LENGTH_SHORT );
         toast.setGravity(Gravity.TOP, 0, 0);
@@ -156,8 +157,9 @@ public class QuizActivity extends AppCompatActivity {
         // Increment score if appropriate
         if (userPressedButton == correctIndex && !justAnsweredQuestion) {
             userScore++;
-            justAnsweredQuestion = true;
+            mUserScoreView.setText(Integer.toString(userScore));
         }
+        justAnsweredQuestion = true;
 
         Toast toast = Toast.makeText(QuizActivity.this, messageResId, Toast.LENGTH_SHORT );
         toast.setGravity(Gravity.TOP, 0, 0);
@@ -174,8 +176,9 @@ public class QuizActivity extends AppCompatActivity {
         // Increment score if appropriate
         if (userSubmitted.equals(correctAnswer) && !justAnsweredQuestion) {
             userScore++;
-            justAnsweredQuestion = true;
+            mUserScoreView.setText(Integer.toString(userScore));
         }
+        justAnsweredQuestion = true;
 
         Toast toast = Toast.makeText(QuizActivity.this, messageResId, Toast.LENGTH_SHORT );
         toast.setGravity(Gravity.TOP, 0, 0);
@@ -227,6 +230,9 @@ public class QuizActivity extends AppCompatActivity {
                 updateQuestion();
             }
         });
+
+        mUserScoreView = findViewById(R.id.user_score);
+        mUserScoreView.setText(Integer.toString(userScore));
 
         // Set up parts of the view specific to different layouts
 
